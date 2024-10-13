@@ -1,0 +1,321 @@
+about:
+  date: October 13, 2024 15:41:52
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 11
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Address:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: supplier_id
+    - name: address_line_1
+    - name: address_line_2
+    - name: city
+    - name: zipcode
+    description: Addresses for customers and suppliers.
+    info_list: Addresses for customers and suppliers.
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - supplier_id
+      name: supplier
+      resource: Supplier
+    type: Address
+    user_key: id
+  Category:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: id
+    description: Categories for grouping products.
+    info_list: Categories for grouping products.
+    type: Category
+    user_key: name
+  Customer:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: email
+    - name: balance
+    - name: credit_limit
+    - name: id
+    description: Table for storing customer information.
+    info_list: Table for storing customer information.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: AddressList
+      resource: Address
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    - direction: tomany
+      fks:
+      - customer_id
+      name: PaymentList
+      resource: Payment
+    - direction: tomany
+      fks:
+      - customer_id
+      name: ReviewList
+      resource: Review
+    type: Customer
+    user_key: name
+  Inventory:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: product_id
+    - name: quantity
+    description: Inventory records for products.
+    info_list: Inventory records for products.
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Inventory
+    user_key: id
+  Item:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+    - name: product_id
+    - name: quantity
+    - name: unit_price
+    - name: amount
+    description: Table for order items. Includes quantities and computed amounts.
+    info_list: Table for order items. Includes quantities and computed amounts.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Item
+    user_key: id
+  Order:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: amount_total
+    - name: notes
+    - name: date_ordered
+    - name: date_shipped
+    description: Table for customer orders. Includes a notes field.
+    info_list: Table for customer orders. Includes a notes field.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: ItemList
+      resource: Item
+    - direction: tomany
+      fks:
+      - order_id
+      name: PaymentList
+      resource: Payment
+    - direction: tomany
+      fks:
+      - order_id
+      name: ShipmentList
+      resource: Shipment
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Order
+    user_key: id
+  Payment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: order_id
+    - name: amount
+    - name: date
+    description: Payments made by customers.
+    info_list: Payments made by customers.
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: Payment
+    user_key: id
+  Product:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: unit_price
+    - name: id
+    description: Product details including price.
+    info_list: Product details including price.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: InventoryList
+      resource: Inventory
+    - direction: tomany
+      fks:
+      - product_id
+      name: ItemList
+      resource: Item
+    - direction: tomany
+      fks:
+      - product_id
+      name: ReviewList
+      resource: Review
+    type: Product
+    user_key: name
+  Promotion:
+    attributes:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+    - name: discount_percent
+    - name: id
+    description: Promotions applicable to products or orders.
+    info_list: Promotions applicable to products or orders.
+    type: Promotion
+    user_key: description
+  Review:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: product_id
+    - name: rating
+    - name: comment
+    description: Customer reviews for products.
+    info_list: Customer reviews for products.
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Review
+    user_key: id
+  Shipment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+    - name: shipment_date
+    - name: carrier
+    - name: tracking_number
+    description: Shipment details for orders.
+    info_list: Shipment details for orders.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: Shipment
+    user_key: id
+  Supplier:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: id
+    description: Suppliers providing products.
+    info_list: Suppliers providing products.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - supplier_id
+      name: AddressList
+      resource: Address
+    type: Supplier
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

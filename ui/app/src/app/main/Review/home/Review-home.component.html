@@ -1,0 +1,53 @@
+<o-form-layout-manager attr="Review" mode="tab" title="REVIEW">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ReviewTable" 
+            service="Review" 
+            entity="Review" 
+            title="REVIEW"
+            keys="id"
+            columns="id;customer_id;product_id;rating;comment" 
+            header-actions="R;D"
+            visible-columns="id;customer_id;product_id;rating;comment"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="customer_id" title="customer_id">
+    <o-table-cell-renderer-service attr="customer_id" 
+        service="Customer" entity="CustomerType" columns="id;name"
+        parent-keys="id:customer_id"
+        value-column="name" keys="customer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="product_id" title="product_id">
+    <o-table-cell-renderer-service attr="product_id" 
+        service="Product" entity="ProductType" columns="id;name"
+        parent-keys="id:product_id"
+        value-column="name" keys="product_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #rating attr="rating" title="rating" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column #comment attr="comment" title="comment" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

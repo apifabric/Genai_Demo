@@ -1,0 +1,57 @@
+<o-form-layout-manager attr="Address" mode="tab" title="ADDRESS">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="AddressTable" 
+            service="Address" 
+            entity="Address" 
+            title="ADDRESS"
+            keys="id"
+            columns="id;customer_id;supplier_id;address_line_1;address_line_2;city;zipcode" 
+            header-actions="R;D"
+            visible-columns="id;customer_id;supplier_id;address_line_1;address_line_2;city;zipcode"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="customer_id" title="customer_id">
+    <o-table-cell-renderer-service attr="customer_id" 
+        service="Customer" entity="CustomerType" columns="id;name"
+        parent-keys="id:customer_id"
+        value-column="name" keys="customer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="supplier_id" title="supplier_id">
+    <o-table-cell-renderer-service attr="supplier_id" 
+        service="Supplier" entity="SupplierType" columns="id;name"
+        parent-keys="id:supplier_id"
+        value-column="name" keys="supplier_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #address_line_1 attr="address_line_1" title="address_line_1" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #address_line_2 attr="address_line_2" title="address_line_2" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #city attr="city" title="city" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #zipcode attr="zipcode" title="zipcode" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

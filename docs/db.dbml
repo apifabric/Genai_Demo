@@ -1,0 +1,105 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Address {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    supplier_id INTEGER 
+    address_line_1 VARCHAR 
+    address_line_2 VARCHAR 
+    city VARCHAR 
+    zipcode VARCHAR 
+    }
+
+Table Customer {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    balance FLOAT 
+    credit_limit FLOAT 
+    }
+
+Table Supplier {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table Category {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table Inventory {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    quantity INTEGER 
+    }
+
+Table Product {
+    id INTEGER [primary key]
+    name VARCHAR 
+    unit_price FLOAT 
+    }
+
+Table Item {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    unit_price FLOAT 
+    amount FLOAT 
+    }
+
+Table Order {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    date_ordered DATETIME 
+    date_shipped DATETIME 
+    amount_total FLOAT 
+    notes VARCHAR 
+    }
+
+Table Payment {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    order_id INTEGER 
+    amount FLOAT 
+    date DATETIME 
+    }
+
+Table Promotion {
+    id INTEGER [primary key]
+    description VARCHAR 
+    discount_percent FLOAT 
+    }
+
+Table Review {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    customer_id INTEGER 
+    rating INTEGER 
+    comment VARCHAR 
+    }
+
+Table Shipment {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    shipment_date DATETIME 
+    carrier VARCHAR 
+    tracking_number VARCHAR 
+    }
+
+
+
+// Relationships
+    Ref: Address.(customer_id) < Customer.(id)
+    Ref: Address.(supplier_id) < Supplier.(id)
+    Ref: Inventory.(product_id) < Product.(id)
+    Ref: Item.(order_id) < Order.(id)
+    Ref: Item.(product_id) < Product.(id)
+    Ref: Order.(customer_id) < Customer.(id)
+    Ref: Payment.(customer_id) < Customer.(id)
+    Ref: Payment.(order_id) < Order.(id)
+    Ref: Review.(customer_id) < Customer.(id)
+    Ref: Review.(product_id) < Product.(id)
+    Ref: Shipment.(order_id) < Order.(id)

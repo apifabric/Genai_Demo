@@ -1,0 +1,263 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Customer_form_edit" 
+        service="Customer" 
+        entity="Customer" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #name attr="name" label=" name*" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #email attr="email" label="email" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-currency-input #balance attr="balance" title="balance" type="currency" editable="no" required="no" currency-symbol="$" currency-symbol-position="left" thousand-separator="," decimal-separator="."></o-currency-input>
+      
+      <o-text-input #credit_limit attr="credit_limit" label="credit_limit" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="ADDRESS-customer_id">
+    <div layout-padding>
+      <o-table 
+        attr="AddressTable" 
+        service="Address" 
+        entity="Address" 
+        keys="id"
+        parent-keys="customer_id:id"
+        columns="id;customer_id;supplier_id;address_line_1;address_line_2;city;zipcode"  
+        horizontal-scroll="yes"
+        detail-form-route="Address" 
+        edit-form-route="Address"
+        visible-columns="id;customer_id;supplier_id;address_line_1;address_line_2;city;zipcode"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="customer_id" title="customer_id">
+    <o-table-cell-renderer-service attr="customer_id" 
+        service="Customer" entity="CustomerType" columns="id;name"
+        parent-keys="id:customer_id"
+        value-column="name" keys="customer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="supplier_id" title="supplier_id">
+    <o-table-cell-renderer-service attr="supplier_id" 
+        service="Supplier" entity="SupplierType" columns="id;name"
+        parent-keys="id:supplier_id"
+        value-column="name" keys="supplier_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #address_line_1 attr="address_line_1" title="address_line_1" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #address_line_2 attr="address_line_2" title="address_line_2" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #city attr="city" title="city" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #zipcode attr="zipcode" title="zipcode" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="ORDER-customer_id">
+    <div layout-padding>
+      <o-table 
+        attr="OrderTable" 
+        service="Order" 
+        entity="Order" 
+        keys="id"
+        parent-keys="customer_id:id"
+        columns="id;customer_id;amount_total;notes;date_ordered;date_shipped"  
+        horizontal-scroll="yes"
+        detail-form-route="Order" 
+        edit-form-route="Order"
+        visible-columns="id;customer_id;amount_total;notes;date_ordered;date_shipped"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="customer_id" title="customer_id">
+    <o-table-cell-renderer-service attr="customer_id" 
+        service="Customer" entity="CustomerType" columns="id;name"
+        parent-keys="id:customer_id"
+        value-column="name" keys="customer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #amount_total attr="amount_total" title="amount_total" type="currency" editable="no" required="no" currency-symbol="$" currency-symbol-position="left" thousand-separator=","decimal-separator="."></o-table-column>
+        
+          <o-table-column #notes attr="notes" title="notes" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-date-input #date_ordered attr="date_ordered" type="date" label="date_ordered" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-date-input #date_shipped attr="date_shipped" type="date" label="date_shipped" enabled="yes" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="PAYMENT-customer_id">
+    <div layout-padding>
+      <o-table 
+        attr="PaymentTable" 
+        service="Payment" 
+        entity="Payment" 
+        keys="id"
+        parent-keys="customer_id:id"
+        columns="id;customer_id;order_id;amount;date"  
+        horizontal-scroll="yes"
+        detail-form-route="Payment" 
+        edit-form-route="Payment"
+        visible-columns="id;customer_id;order_id;amount;date"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="customer_id" title="customer_id">
+    <o-table-cell-renderer-service attr="customer_id" 
+        service="Customer" entity="CustomerType" columns="id;name"
+        parent-keys="id:customer_id"
+        value-column="name" keys="customer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="order_id" title="order_id">
+    <o-table-cell-renderer-service attr="order_id" 
+        service="Order" entity="OrderType" columns="id;id"
+        parent-keys="id:order_id"
+        value-column="id" keys="order_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #amount attr="amount" title="amount" type="currency" editable="no" required="no" currency-symbol="$" currency-symbol-position="left" thousand-separator=","decimal-separator="."></o-table-column>
+        
+          <o-date-input #date attr="date" type="timestamp" label="date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="REVIEW-customer_id">
+    <div layout-padding>
+      <o-table 
+        attr="ReviewTable" 
+        service="Review" 
+        entity="Review" 
+        keys="id"
+        parent-keys="customer_id:id"
+        columns="id;customer_id;product_id;rating;comment"  
+        horizontal-scroll="yes"
+        detail-form-route="Review" 
+        edit-form-route="Review"
+        visible-columns="id;customer_id;product_id;rating;comment"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="customer_id" title="customer_id">
+    <o-table-cell-renderer-service attr="customer_id" 
+        service="Customer" entity="CustomerType" columns="id;name"
+        parent-keys="id:customer_id"
+        value-column="name" keys="customer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="product_id" title="product_id">
+    <o-table-cell-renderer-service attr="product_id" 
+        service="Product" entity="ProductType" columns="id;name"
+        parent-keys="id:product_id"
+        value-column="name" keys="product_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #rating attr="rating" title="rating" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column #comment attr="comment" title="comment" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>
